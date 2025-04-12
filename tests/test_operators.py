@@ -118,6 +118,7 @@ def test_transitive(a: float, b: float, c: float) -> None:
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     # TODO: Implement for Task 0.2.
     #raise NotImplementedError('Need to implement for Task 0.2')
+    assume(a != b or b != c)
     assert (lt(a, c) == 1.0) == (lt(a, b) == 1.0 and lt(b, c) == 1.0)
 
 @pytest.mark.task0_2
