@@ -82,7 +82,7 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
             dfs(child)
         topo_order.append(node)
     
-    for node in nodes:
+    for node in Variable.parents:  # 假设节点有 parents 属性记录前驱节点
         if node not in visited:
             dfs(node)
     
@@ -104,6 +104,14 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     """
     # TODO: Implement for Task 1.4.
     #raise NotImplementedError('Need to implement for Task 1.4')
+    # Perform topological sort
+    topo_order = topological_sort(variable) #c -> b ->a 
+    # Initialize the derivative for the starting variable
+    variable.accumulate_derivative(deriv)
+    # Iterate through the topological order
+    
+
+
 
 
 
