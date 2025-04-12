@@ -23,7 +23,15 @@ def central_difference(f: Any, *vals: Any, arg: int = 0, epsilon: float = 1e-6) 
         An approximation of $f'_i(x_0, \ldots, x_{n-1})$
     """
     # TODO: Implement for Task 1.1.
-    raise NotImplementedError('Need to implement for Task 1.1')
+    #raise NotImplementedError('Need to implement for Task 1.1')
+    result : float
+    values_plus = list(vals)
+    values_plus[arg] += epsilon
+    vals_minus = list(vals)
+    vals_minus[arg] -= epsilon
+    f_plus = f(*values_plus)
+    f_minus = f(*vals_minus) 
+    return (f_plus - f_minus) / (2 * epsilon)
 
 
 variable_count = 1
@@ -62,7 +70,25 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
         Non-constant Variables in topological order starting from the right.
     """
     # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
+    #raise NotImplementedError('Need to implement for Task 1.4')
+    visited = set()
+    topo_order = []
+    
+    def dfs(node):
+        if node in visited:
+            return
+        visited.add(node)
+        for child in node.children:  # 假设节点有 children 属性记录后继节点
+            dfs(child)
+        topo_order.append(node)
+    
+    for node in nodes:
+        if node not in visited:
+            dfs(node)
+    
+    # 后序结果的逆序即为拓扑排序
+    return topo_order[::-1]   
+
 
 
 def backpropagate(variable: Variable, deriv: Any) -> None:
@@ -77,7 +103,8 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     No return. Should write to its results to the derivative values of each leaf through `accumulate_derivative`.
     """
     # TODO: Implement for Task 1.4.
-    raise NotImplementedError('Need to implement for Task 1.4')
+    #raise NotImplementedError('Need to implement for Task 1.4')
+
 
 
 @dataclass
