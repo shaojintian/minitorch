@@ -44,7 +44,12 @@ def index_to_position(index: Index, strides: Strides) -> int:
     """
 
     # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
+    #mem position = i*stride[i] + j*stride[j] + k*stride[k] + ...
+    #raise NotImplementedError('Need to implement for Task 2.1')
+    pos = 0
+    for index, stride in zip(index, strides):
+        pos += index * stride
+    return pos
 
 
 def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
@@ -58,10 +63,13 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
         ordinal: ordinal position to convert.
         shape : tensor shape.
         out_index : return index corresponding to position.
+        stride[i] = shape[i+1] * stride[i+1] 
 
     """
     # TODO: Implement for Task 2.1.
-    raise NotImplementedError('Need to implement for Task 2.1')
+    #raise NotImplementedError('Need to implement for Task 2.1')
+    
+
 
 
 def broadcast_index(
