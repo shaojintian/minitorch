@@ -114,7 +114,7 @@ class Mul(ScalarFunction):
         #raise NotImplementedError('Need to implement for Task 1.4')
         grad_a = d_output * ctx.saved_values[1]
         grad_b = d_output * ctx.saved_values[0]
-        return Tuple[grad_a, grad_b] 
+        return [grad_a, grad_b] 
 
 
 class Inv(ScalarFunction):

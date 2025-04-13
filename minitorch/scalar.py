@@ -189,8 +189,8 @@ class Scalar:
         # TODO: Implement for Task 1.3.
         #raise NotImplementedError('Need to implement for Task 1.3')
         
-        gradients = h.last_fn.backward(h.ctx, d_output)
-        return list(zip(h.inputs,gradients))
+        gradients = h.last_fn._backward(h.ctx, d_output)
+        return zip(h.inputs,gradients)
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """

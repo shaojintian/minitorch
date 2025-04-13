@@ -71,23 +71,21 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
     """
     # TODO: Implement for Task 1.4.
     #raise NotImplementedError('Need to implement for Task 1.4')
-    visited = set()
+    visited = []
     topo_order = []
     
-    def dfs(node):
-        if node in visited:
+    def dfs(node: Variable):
+        if node.unique_id in visited:
             return
-        visited.add(node)
-        for child in node.children:  # 假设节点有 children 属性记录后继节点
-            dfs(child)
-        topo_order.append(node)
+        visited.append(node.unique_id)
+        for parent in node.parents:  # 假设节点有 children 属性记录后继节点
+            dfs(parent)
+        topo_order.insert(0,node)
     
-    for node in Variable.parents:  # 假设节点有 parents 属性记录前驱节点
-        if node not in visited:
-            dfs(node)
+    dfs(variable)
     
-    # 后序结果的逆序即为拓扑排序
-    return topo_order[::-1]   
+    
+    return topo_order  
 
 
 
@@ -105,10 +103,28 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     # TODO: Implement for Task 1.4.
     #raise NotImplementedError('Need to implement for Task 1.4')
     # Perform topological sort
-    topo_order = topological_sort(variable) #c -> b ->a 
-    # Initialize the derivative for the starting variable
-    variable.accumulate_derivative(deriv)
-    # Iterate through the topological order
+
+
+    result = topological_sort(variable) 
+    # 得到以Variable为最右节点的子节点拓扑图
+    node2deriv = {}
+    node2deriv[variable.unique_id] = deriv
+    for n in result:
+        if n.is_leaf():
+            continue
+        if n.unique_id in node2deriv.keys():
+            deriv = node2deriv[n.unique_id]
+        deriv_tmp = n.chain_rule(deriv)
+        for key, item in deriv_tmp: 
+            if key.is_leaf(): 
+                key.accumulate_derivative(item)
+                continue
+            if key.unique_id in node2deriv.keys():
+                # 根据 unique_id 判断是否已经计算得到部分梯度
+                # !不要使用Scallar in，因为重构了__eq__
+                node2deriv[key.unique_id] += item
+            else:
+                node2deriv[key.unique_id] = item
     
 
 
