@@ -67,7 +67,12 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
 
     """
     # TODO: Implement for Task 2.1.
+    #shape = (2, 5) ->(1,4) -> 9
     #raise NotImplementedError('Need to implement for Task 2.1')
+    for i in range(len(shape) - 1, -1, -1):
+        out_index[i] = ordinal % shape[i]
+        ordinal //= shape[i]
+    return out_index
     
 
 
@@ -92,7 +97,8 @@ def broadcast_index(
         None
     """
     # TODO: Implement for Task 2.2.
-    raise NotImplementedError('Need to implement for Task 2.2')
+    #raise NotImplementedError('Need to implement for Task 2.2')
+    
 
 
 def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
